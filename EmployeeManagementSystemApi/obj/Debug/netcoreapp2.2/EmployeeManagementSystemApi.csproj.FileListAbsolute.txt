@@ -1,0 +1,14 @@
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.deps.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.runtimeconfig.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.runtimeconfig.dev.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.pdb
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.csproj.CoreCompileInputs.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.RazorAssemblyInfo.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.RazorAssemblyInfo.cs
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.AssemblyInfoInputs.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.AssemblyInfo.cs
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.RazorTargetAssemblyInfo.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.pdb
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.csprojResolveAssemblyReference.cache

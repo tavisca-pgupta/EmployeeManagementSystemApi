@@ -1,0 +1,16 @@
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.csprojResolveAssemblyReference.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.csproj.CoreCompileInputs.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.AssemblyInfoInputs.cache
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.AssemblyInfo.cs
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\xunit.runner.utility.netcoreapp10.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.deps.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.runtimeconfig.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.runtimeconfig.dev.json
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.pdb
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\bin\Debug\netcoreapp2.2\EmployeeManagementSystemApi.pdb
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.dll
+C:\Users\pgupta\source\repos\EmployeeManagementSystemApi\EmployeeManagementSystemApi.Tests\obj\Debug\netcoreapp2.2\EmployeeManagementSystemApi.Tests.pdb
