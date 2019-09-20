@@ -10,6 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using EmployeeManagementSystemApi.Model;
+using Microsoft.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using EmployeeManagementSystemApi.Service;
 
 namespace EmployeeManagementSystemApi
 {
@@ -25,7 +30,21 @@ namespace EmployeeManagementSystemApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation();
+
+            services.AddDbContextPool<EmployeeContext>(options =>
+            options.UseInMemoryDatabase("EmployeeDB")
+            );
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+            });
+
+            services.AddTransient<IValidator<Employee>, EmployeeValidator>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IManagerService, ManagerService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +62,7 @@ namespace EmployeeManagementSystemApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
     }
 }

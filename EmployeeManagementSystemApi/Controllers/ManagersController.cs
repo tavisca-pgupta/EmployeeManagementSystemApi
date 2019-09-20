@@ -2,59 +2,62 @@
 using Microsoft.AspNetCore.Mvc;
 using EmployeeManagementSystemApi.Model;
 using System.Linq;
+using EmployeeManagementSystemApi.Service;
+using System;
 
 namespace EmployeeManagementSystemApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/managers")]
     [ApiController]
     public class ManagersController : ControllerBase
     {
-        List<Employee> employees = EmployeeDb.employees;
-        [HttpGet]
-        public IEnumerable<Employee> GetAllManagers()
-        {
-            List<Employee> managers = new List<Employee>();
-            var managerIds = employees.Select(employee => employee.ManagerId).ToList().Distinct();
-            foreach (var managerId in managerIds)
-            {
-                foreach (var employee in employees)
-                {
-                    if (managerId == employee.EmployeeId)
-                    {
-                        managers.Add(employee);
-                    }
-                }
-            }
-            return managers;
+        private IManagerService _managerService;
+        private IEmployeeService _employeeService;
 
+        public ManagersController(IManagerService managerService, IEmployeeService employeeService)
+        {
+            _managerService = managerService;
+            _employeeService = employeeService;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Employee>> GetAllManagers()
+        {
+            return Ok(_managerService.GetAllManagers());
         }
 
         [HttpGet("{managerId}")]
         public ActionResult<IEnumerable<Employee>> GetManagerById(int managerId)
         {
-            var managerIds = employees.Select(employee => employee.ManagerId).ToList().Distinct();
-            if (managerIds.Contains(managerId))
-                return employees.Where(employee => employee.EmployeeId == managerId).ToList();
-            return NotFound("Manager Id is not valid");
+           try
+            {
+                return Ok(_managerService.GetManagerById(managerId));
+            }
+            catch (ManagerIdNotValidException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // POST api/values
-    //    [HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-
-        //}
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpGet("{managerId}/employees")]
+        public ActionResult<IEnumerable<Employee>> GetEmployeesByManagerId(int managerId)
+        {
+            try
+            {
+                return Ok(_employeeService.GetEmployeesByManagerId(managerId));
+            }
+            catch (ManagerIdNotValidException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

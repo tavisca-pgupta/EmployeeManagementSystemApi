@@ -14,25 +14,23 @@ namespace EmployeeManagementSystemApi.Tests
         [Fact]
         public void GetAllEmployees_ShouldReturnAllEmployees()
         {
-            IEnumerable<Employee> expected = new List<Employee>()
-            {
-            new Employee(){EmployeeId=1,Name="Prakhar",Salary=600000,Age=21},
-            new Employee(){EmployeeId=2,Name="Rahul",Salary=600000,Age=23,ManagerId=1},
-            new Employee(){EmployeeId=3,Name="Raunak",Salary=300000,Age=20,ManagerId=2},
-            new Employee(){EmployeeId=4,Name="Deepak",Salary=300000,Age=20,ManagerId=2},
-            new Employee(){EmployeeId=5,Name="Rohit",Salary=300000,Age=20,ManagerId=2}
-            };
+            int expected = EmployeeDb.employees.Count;
 
             var employeeController = new EmployeesController();
-            var result = employeeController.GetAllEmployees();
+            var result = employeeController.GetAllEmployees().Count();
 
             Assert.Equal(expected, result);
         
         }
         [Fact]
-        public void GetEmployeesByManagerId_ShouldReturn()
+        public void GetEmployeesByManagerId_ShouldReturnAllEmployeesUnderTheGivenManager()
         {
+            int expected = 3;
 
+            var employeeController = new EmployeesController();
+            var result = employeeController.GetEmployeesByManagerId(2);
+
+            Assert.Equal(expected, result);
         }
     }
 }

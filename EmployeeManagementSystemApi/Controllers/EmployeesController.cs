@@ -1,49 +1,92 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using EmployeeManagementSystemApi.Model;
-using System.Linq;
+using EmployeeManagementSystemApi.Service;
+using System;
+using System.Threading.Tasks;
+using EmployeeManagementSystemApi.Cache;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace EmployeeManagementSystemApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/employees")]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-       
-        // GET api/values
+        private IEmployeeService _employeeService;
+        const int maxEmployeesPageSize = 20;
+        private IDistributedCache _cache;
+
+        public EmployeesController(IDistributedCache cache, IEmployeeService employeeService)
+        {
+            _employeeService = employeeService;
+            _cache = cache;
+        }
         [HttpGet]
-        public IEnumerable<Employee> GetAllEmployees()
+        public ActionResult<IEnumerable<Employee>> GetAllEmployees([FromQuery] int pageNumber=1,[FromQuery] int pageSize=10)
         {
-            return EmployeeDb.employees;
+            pageSize = pageSize > maxEmployeesPageSize ? maxEmployeesPageSize : pageSize;
+            return Ok(_employeeService.GetAllEmployees(pageNumber,pageSize));
         }
 
-        // GET api/values/5
-        [HttpGet("{managerId}")]
-        public ActionResult<IEnumerable<Employee>> GetEmployeesByManagerId(int managerId)
+        [HttpGet("{employeeId}",Name = "GetEmployeeByEmployeeId")]
+        public async  Task<ActionResult<Employee>> GetEmployeeByEmployeeId(long employeeId)
         {
-            var managerIds = EmployeeDb.employees.Select(employee => employee.ManagerId).ToList().Distinct();
-            if (managerIds.Contains(managerId))
-                return EmployeeDb.employees.Where(employee => employee.ManagerId == managerId).ToList();
-            return NotFound("Manager Id is not valid");          
+            var employee = await RedisCache.GetObjectAsync<Employee>(_cache,$"employees-{employeeId.ToString()}");
+            if (employee != null)
+                return Ok(employee);
+            else
+            {
+                try
+                {
+                    return Ok(await _employeeService.GetEmployeeByEmployeeId(_cache,employeeId));
+                }
+                catch (ManagerIdNotValidException ex)
+                {
+                    return NotFound(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] Employee employee)
+        public ActionResult AddEmployee([FromBody] Employee employee)
         {
-            EmployeeDb.employees.Add(employee);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _employeeService.AddEmployee(employee);
+                    return CreatedAtRoute("GetEmployeeByEmployeeId", new { employeeId = employee.Id }, employee);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest();
+           
         }
 
-        // PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public ActionResult Delete(long id)
+        {
+            try
+            {
+                _employeeService.DeleteEmployee(id);
+                return NoContent();
+            }
+            catch(EmployeeIsAManagerOfOtherEmployeesException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch(EmployeeNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
     }
 }
