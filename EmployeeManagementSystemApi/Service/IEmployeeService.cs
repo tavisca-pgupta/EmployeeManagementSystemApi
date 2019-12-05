@@ -12,7 +12,7 @@ namespace EmployeeManagementSystemApi.Service
         IEnumerable<Employee> GetAllEmployees();
         IEnumerable<Employee> GetAllEmployees(int pageNumber, int pageSize);
         List<long> GetAllManagerIds();
-        Task<Employee> GetEmployeeByEmployeeId(IDistributedCache cache, long employeeId);
+        Task<Employee> GetEmployeeByEmployeeId(long employeeId);
         IEnumerable<Employee> GetEmployeesByManagerId(int managerId);
     }
 }

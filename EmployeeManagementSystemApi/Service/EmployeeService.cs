@@ -12,10 +12,12 @@ namespace EmployeeManagementSystemApi.Service
     public class EmployeeService : IEmployeeService
     {
         private EmployeeContext _context;
+        private ICache _cache;
 
-        public EmployeeService(EmployeeContext context)
+        public EmployeeService(EmployeeContext context, ICache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         public IEnumerable<Employee> GetAllEmployees()
@@ -39,20 +41,26 @@ namespace EmployeeManagementSystemApi.Service
         public void AddEmployee(Employee employee)
         {
             
-             _context.Employees.Add(employee);
+            _context.Employees.Add(employee);
             _context.SaveChanges();
         }
 
-        public async Task<Employee> GetEmployeeByEmployeeId(IDistributedCache cache,long employeeId)
+        public async Task<Employee> GetEmployeeByEmployeeId(long employeeId)
         {
-            Employee emp = _context.Employees.Find(employeeId);
-            if (emp == null)                                                
-                throw new EmployeeNotFoundException("Employee not found");
+            var employee = await _cache.GetObjectAsync<Employee>($"employees-{employeeId.ToString()}");
+            if (employee != null)
+                return employee;
             else
             {
-                await RedisCache.SetObjectAsync<Employee>(cache,$"employees-{employeeId}",emp);
-                return emp;
-            }             
+                employee = _context.Employees.Find(employeeId);
+                if (employee == null)
+                    throw new EmployeeNotFoundException("Employee not found");
+                else
+                {
+                    await _cache.SetObjectAsync<Employee>($"employees-{employeeId}", employee);
+                    return employee;
+                }
+            }
         }
 
         public List<long> GetAllManagerIds()

@@ -1,23 +1,26 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManagementSystemApi.Cache
 {
-    public class RedisCache
+    public class RedisCache : ICache
     {
-
-        public static async Task SetObjectAsync<T>(IDistributedCache cache,string key, T value)
+        private readonly IDistributedCache _cache;
+        public RedisCache(IDistributedCache cache)
         {
-            await cache.SetStringAsync(key, JsonConvert.SerializeObject(value),new DistributedCacheEntryOptions() { AbsoluteExpiration= DateTime.UtcNow.AddMinutes(1)});
+            _cache = cache;
         }
 
-        public static async Task<T> GetObjectAsync<T>(IDistributedCache cache,string key)
+        public async Task SetObjectAsync<T>(string key, T value)
         {
-            string value = await cache.GetStringAsync(key);
+            await _cache.SetStringAsync(key, JsonConvert.SerializeObject(value),new DistributedCacheEntryOptions() { AbsoluteExpiration= DateTime.UtcNow.AddMinutes(1)});
+        }
+
+        public async Task<T> GetObjectAsync<T>(string key)
+        {
+            string value = await _cache.GetStringAsync(key);
             return value==null? default(T) : JsonConvert.DeserializeObject<T>(value);
         }
     }

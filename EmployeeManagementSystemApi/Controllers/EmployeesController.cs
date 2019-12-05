@@ -15,12 +15,10 @@ namespace EmployeeManagementSystemApi.Controllers
     {
         private IEmployeeService _employeeService;
         const int maxEmployeesPageSize = 20;
-        private IDistributedCache _cache;
 
-        public EmployeesController(IDistributedCache cache, IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
-            _cache = cache;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Employee>> GetAllEmployees([FromQuery] int pageNumber=1,[FromQuery] int pageSize=10)
@@ -32,14 +30,9 @@ namespace EmployeeManagementSystemApi.Controllers
         [HttpGet("{employeeId}",Name = "GetEmployeeByEmployeeId")]
         public async  Task<ActionResult<Employee>> GetEmployeeByEmployeeId(long employeeId)
         {
-            var employee = await RedisCache.GetObjectAsync<Employee>(_cache,$"employees-{employeeId.ToString()}");
-            if (employee != null)
-                return Ok(employee);
-            else
-            {
                 try
                 {
-                    return Ok(await _employeeService.GetEmployeeByEmployeeId(_cache,employeeId));
+                    return Ok(await _employeeService.GetEmployeeByEmployeeId(employeeId));
                 }
                 catch (ManagerIdNotValidException ex)
                 {
@@ -49,7 +42,6 @@ namespace EmployeeManagementSystemApi.Controllers
                 {
                     return BadRequest(ex.Message);
                 }
-            }
         }
 
         [HttpPost]
